@@ -3,13 +3,11 @@ import {
   DatabaseError
 } from './../../core/index';
 
-import {
-  QueryResult,
-  Select,
-  Insert,
-  Update,
-  Delete,
-} from './../index';
+import { QueryResult } from './QueryResult';
+import { Select } from './select/index';
+import { Insert } from './insert/index';
+import { Delete } from './delete/index';
+import { Update } from './update/index';
 
 export class Query {
   private _store: IStore;

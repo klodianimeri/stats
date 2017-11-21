@@ -1,13 +1,25 @@
+import { Where } from './../where/index';
 import {
-  Where,
   IJoin,
-  InnerJoin,
+  InnerJoin
+} from './../join/index';
+
+import {
   OrderAscending,
-  OrderDescending,
+  OrderDescending
+} from './Order';
+
+import {
   Distinct,
-  IState,
+} from './Distinct';
+
+import {
+  IState
+} from './../IState';
+
+import {
   WhereExpression
-} from './../../index';
+} from './../where/WhereExpression';
 
 export class Select implements IState {
   private _select: Array<string>;

@@ -1,4 +1,11 @@
-import { Where, IState, WhereExpression } from './../index';
+import {
+  IState
+} from './../IState';
+
+import {
+  Where,
+  WhereExpression
+} from './../where/index';
 
 export class Delete implements IState {
   private _into: string;

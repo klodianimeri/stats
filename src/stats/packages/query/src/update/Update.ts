@@ -1,9 +1,15 @@
 import {
-  QueryResult,
-  Where,
-  WhereExpression,
+  QueryResult
+} from './../QueryResult';
+
+import {
   IState
-} from './../../index';
+} from './../IState';
+
+import {
+  Where,
+  WhereExpression
+} from './../where/index';
 
 export class Update implements IState {
   private _table: string;
