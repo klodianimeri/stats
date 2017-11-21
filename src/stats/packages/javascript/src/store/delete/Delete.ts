@@ -4,13 +4,14 @@ import {
   WhereExpression
 } from './../../../../core/index';
 
-import {
-  Database,
-  Table,
-  Row,
-  Where
-} from './../../index';
+import { Database } from './../../database/index';
 
+import {
+  Table,
+  Row
+} from './../../table/index';
+
+import { Where } from './../where/index';
 import {
   Delete as QueryDelete,
   QueryResult

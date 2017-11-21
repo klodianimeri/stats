@@ -5,11 +5,14 @@ import {
   DatabaseError
 } from './../../../../core/index';
 
+import { Database } from './../../database/index';
+
 import {
   Table,
-  Where,
-  Database
-} from './../../index';
+  Row
+} from './../../table/index';
+
+import { Where } from './../where/index';
 
 import {
   QueryResult,

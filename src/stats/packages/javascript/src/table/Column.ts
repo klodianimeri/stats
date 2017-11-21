@@ -7,8 +7,9 @@ import {
   DataType,
   RepresentingType,
   TypeUtilities,
-  Row,
-} from "./../index";
+} from './DataType';
+
+import { Row } from './Row';
 
 
 export class Column {

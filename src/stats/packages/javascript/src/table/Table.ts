@@ -1,4 +1,6 @@
-import { Column, Row, DataType, TypeUtilities } from "./index";
+import { Column } from "./Column";
+import { Row } from "./Row";
+import { DataType, TypeUtilities } from "./DataType";
 
 export class Table {
     private _name: string;

@@ -3,7 +3,7 @@ import {
   RepresentingType,
   Table,
   Row
-} from './../../index';
+} from './../../table/index';
 
 
 export class OrderBase {

@@ -1,13 +1,10 @@
 import { IStore } from './../../../core/index';
-
-import {
-  Database,
-  Table,
-  Insert,
-  Select,
-  Delete,
-  Update
-} from './../index';
+import { Database } from './../database/index';
+import { Table } from './../table/index';
+import { Insert } from './insert/index';
+import { Select } from './select/index';
+import { Delete } from './delete/index';
+import { Update } from './update/index';
 
 import {
   QueryResult,

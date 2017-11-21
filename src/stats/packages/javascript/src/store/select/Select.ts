@@ -8,18 +8,24 @@ import {
   QueryResult
 } from './../../../../query/index';
 
+import { Database } from './../../database/index';
 import {
-  Database,
   Table,
   Column,
   Row,
-  Where,
-  OrderAscending,
-  OrderDescending,
-  Distinct,
-  InnerJoin
-} from './../../index';
+} from './../../table/index';
 
+import { Where } from './../where/index';
+import { InnerJoin } from './../join/index';
+
+import {
+  OrderAscending,
+  OrderDescending
+} from './Order';
+
+import {
+  Distinct
+} from './Distinct';
 
 export class Select implements IExecute {
   private _database: Database;

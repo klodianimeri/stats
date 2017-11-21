@@ -7,7 +7,7 @@ import {
   Column,
   Table,
   Row
-} from './../../index';
+} from './../../table/index';
 
 export class Where {
   private _wheres: Array<WhereExpression>;

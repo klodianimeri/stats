@@ -5,10 +5,13 @@ import {
 } from './../../../../core/index';
 
 import {
-  Database,
+  Database
+} from './../../database/index';
+
+import {
   Table,
   Row
-} from './../../index';
+} from './../../table/index';
 
 import {
   QueryResult,

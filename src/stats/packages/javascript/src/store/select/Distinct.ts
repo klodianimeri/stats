@@ -1,7 +1,7 @@
 import {
   Table,
   Row
-} from './../../index';
+} from './../../table/index';
 
 export class Distinct {
   private _distincts: Array<string>;
