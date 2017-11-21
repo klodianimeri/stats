@@ -1,3 +1,4 @@
-export * from "./errors/index";
-export * from "./log/log";
+export * from './errors/index';
+export * from './log/index';
 export * from './istore/index';
+export * from './where/index';

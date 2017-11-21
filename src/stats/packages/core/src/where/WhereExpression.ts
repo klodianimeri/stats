@@ -1,6 +1,4 @@
-import {
-  DatabaseError
-} from './../index';
+import { DatabaseError } from "./../errors/index";
 /**
  * WhereOperator
  */

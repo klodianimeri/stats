@@ -1,4 +1,4 @@
-import { DatabaseLogger } from "./../../index";
+import { DatabaseLogger } from "./../log/index";
 /**
  * Wrapper around Error that sets the error message.
  * @docs-private
