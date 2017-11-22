@@ -29,7 +29,7 @@ export class Query {
     return this._store.Select(selectInstance);
   }
 
-  public Insert(i: (insertParam: Insert) => Insert) {
+  public Insert(i: (insertParam: Insert) => Insert): QueryResult {
     if (!this._store) {
       throw new StatsError(`QUERY: Store not initialized!`);
     }
@@ -40,7 +40,7 @@ export class Query {
 
   }
 
-  public Delete(d: (deleteParam: Delete) => Delete) {
+  public Delete(d: (deleteParam: Delete) => Delete): QueryResult {
     if (!this._store) {
       throw new StatsError(`QUERY: Store not initialized!`);
     }
@@ -50,7 +50,7 @@ export class Query {
     return this._store.Delete(deleteInstance);
   }
 
-  public Update(u: (updateParam: Update) => Update) {
+  public Update(u: (updateParam: Update) => Update): QueryResult {
     if (!this._store) {
       throw new StatsError(`QUERY: Store not initialized!`);
     }
