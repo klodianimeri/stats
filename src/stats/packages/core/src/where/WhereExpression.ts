@@ -1,4 +1,4 @@
-import { DatabaseError } from "./../errors/index";
+import { StatsError } from "./../errors/index";
 /**
  * WhereOperator
  */
@@ -21,6 +21,7 @@ export enum ComparisonOperator {
   In,
   Between
 }
+
 
 /**
 * WhereExpression
@@ -83,13 +84,13 @@ export class WhereExpression {
         break;
       case ComparisonOperator.In:
         if (((<Array<any>>this._value).length == 0)) {
-          throw new DatabaseError("WHERE: Value provided for In is not an array with values!");
+          throw new StatsError("WHERE: Value provided for In is not an array with values!");
         }
         result = (<Array<any>>this._value).indexOf(value) == -1 ? false : true;
         break;
       case ComparisonOperator.Between:
         if (!((<Array<any>>this._value).length == 2)) {
-          throw new DatabaseError("WHERE: Value provided for Between is not an array with two values!");
+          throw new StatsError("WHERE: Value provided for Between is not an array with two values!");
         }
         result = ((value >= (<Array<any>>this._value)[0]) && (value <= (<Array<any>>this._value)[1]));
         break;

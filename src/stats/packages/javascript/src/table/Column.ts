@@ -1,6 +1,6 @@
 import {
-  DatabaseError,
-  DatabaseInfo
+  StatsError,
+  StatsInfo
 } from './../../../core/index';
 
 import {
@@ -85,7 +85,7 @@ export class Column {
     let value = row.Row[this._name];
 
     if (this._primaryKey && ((typeof value == undefined) || value == null)) {
-      new DatabaseError(`ROW PROCESS: Column ${this._name} primary key constraint violation!`)
+      new StatsError(`ROW PROCESS: Column ${this._name} primary key constraint violation!`)
       return false;
     }
 
@@ -94,17 +94,17 @@ export class Column {
     }
 
     if (!this._allowNull && ((typeof value == undefined) || value == null)) {
-      new DatabaseError(`ROW PROCESS: Column ${this._name} not null constraint violation!`)
+      new StatsError(`ROW PROCESS: Column ${this._name} not null constraint violation!`)
       return false;
     }
 
     if (this._length && (value.length >= this._length)) {
-      new DatabaseError(`ROW PROCESS: Column ${this._name} length constraint violation!`)
+      new StatsError(`ROW PROCESS: Column ${this._name} length constraint violation!`)
       return false;
     }
 
     if (this._check && this._check.indexOf(value) == -1) {
-      new DatabaseError(`ROW PROCESS: Column ${this._name} check constraint violation!`)
+      new StatsError(`ROW PROCESS: Column ${this._name} check constraint violation!`)
       return false;
     }
 

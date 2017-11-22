@@ -1,7 +1,7 @@
 import {
   IExecute,
-  DatabaseError,
-  DatabaseWarn
+  StatsError,
+  StatsWarn
 } from './../../../../core/index';
 
 import {
@@ -29,7 +29,7 @@ export class Insert implements IExecute {
     this._into = this._database.Table(queryInsert.State()[0]);
 
     if (!this._into) {
-      throw new DatabaseError(`INSERT: Table ${queryInsert.State()[0]} does not exist!`);
+      throw new StatsError(`INSERT: Table ${queryInsert.State()[0]} does not exist!`);
     }
 
     this._columns = queryInsert.State()[1];
@@ -43,7 +43,7 @@ export class Insert implements IExecute {
     // Check if primary colum exists in the new insert
     let primaryKeyColumn = this._into.Columns.find((column) => { return column.IsPrimaryKey === true });
     if (primaryKeyColumn && this._columns.indexOf(primaryKeyColumn.Name) == -1) {
-      new DatabaseError(`INSERT: Primary Key Column does not exist in insert data!`);
+      new StatsError(`INSERT: Primary Key Column does not exist in insert data!`);
       newRowInsert = false;
     }
 
@@ -57,14 +57,14 @@ export class Insert implements IExecute {
           newRow.Row[columnName] = this._values[index];
         } else {
           newRowInsert = false;
-          new DatabaseError(`INSERT: Column name ${columnName} does not exist in table ${this._into.Name}!`);
+          new StatsError(`INSERT: Column name ${columnName} does not exist in table ${this._into.Name}!`);
         }
 
         if (columnInsert.IsPrimaryKey) {
           let filteredValueRows = this._into.Data.filter((value) => { return value.Row[columnName] === this._values[columnInsert.Name]; });
           if (filteredValueRows.length > 0) {
             newRowInsert = false;
-            new DatabaseWarn(`INSERT: Primary key ${this._into.Name}.${columnName} value ${this._values[columnInsert.Name]} constraint violation!`);
+            new StatsWarn(`INSERT: Primary key ${this._into.Name}.${columnName} value ${this._values[columnInsert.Name]} constraint violation!`);
           }
         }
 

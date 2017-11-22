@@ -1,6 +1,6 @@
 import {
   IStore,
-  DatabaseError
+  StatsError
 } from './../../core/index';
 
 import { QueryResult } from './QueryResult';
@@ -21,7 +21,7 @@ export class Query {
 
   public Select(s: (selectParam: Select) => Select): QueryResult {
     if (!this._store) {
-      throw new DatabaseError(`QUERY: Store not initialized!`);
+      throw new StatsError(`QUERY: Store not initialized!`);
     }
 
     let selectInstance: Select = s(new Select());
@@ -31,7 +31,7 @@ export class Query {
 
   public Insert(i: (insertParam: Insert) => Insert) {
     if (!this._store) {
-      throw new DatabaseError(`QUERY: Store not initialized!`);
+      throw new StatsError(`QUERY: Store not initialized!`);
     }
 
     let insertInstance: Insert = i(new Insert());
@@ -42,7 +42,7 @@ export class Query {
 
   public Delete(d: (deleteParam: Delete) => Delete) {
     if (!this._store) {
-      throw new DatabaseError(`QUERY: Store not initialized!`);
+      throw new StatsError(`QUERY: Store not initialized!`);
     }
 
     let deleteInstance: Delete = d(new Delete());
@@ -52,7 +52,7 @@ export class Query {
 
   public Update(u: (updateParam: Update) => Update) {
     if (!this._store) {
-      throw new DatabaseError(`QUERY: Store not initialized!`);
+      throw new StatsError(`QUERY: Store not initialized!`);
     }
 
     let updateInstance: Update = u(new Update());

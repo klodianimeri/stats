@@ -1,5 +1,5 @@
 import {
-  DatabaseError,
+  StatsError,
 } from './../../../../core/index';
 
 import {
@@ -23,7 +23,7 @@ export class InnerJoin {
 
   ExecuteQuery(joinTable: Table): Table {
     if (!joinTable) {
-      throw new DatabaseError(`JOIN ERROR: Join table is undefined.`);
+      throw new StatsError(`JOIN ERROR: Join table is undefined.`);
     }
 
     this._table1 = joinTable;
@@ -31,17 +31,17 @@ export class InnerJoin {
     let table1Column: Column = this._table1.Columns.filter((e) => { return e.Name == this._table1Col })[0];
 
     if (!table1Column) {
-      throw new DatabaseError(`JOIN ERROR: Column ${this._table1Col} does not exist in table.`);
+      throw new StatsError(`JOIN ERROR: Column ${this._table1Col} does not exist in table.`);
     } else if (!table1Column.IsPrimaryKey) {
-      throw new DatabaseError(`JOIN ERROR: Table ${this._table1.Name} column ${table1Column.Name} is not a PrimaryKey.`)
+      throw new StatsError(`JOIN ERROR: Table ${this._table1.Name} column ${table1Column.Name} is not a PrimaryKey.`)
     }
 
     let table2Column: Column = this._table2.Columns.filter((e) => { return e.Name == this._table2Col })[0];
 
     if (!table2Column) {
-      throw new DatabaseError(`JOIN ERROR: Column ${this._table2Col} does not exist in table.`);
+      throw new StatsError(`JOIN ERROR: Column ${this._table2Col} does not exist in table.`);
     } else if (!table2Column.IsForeignKey) {
-      throw new DatabaseError(`JOIN ERROR: Table ${this._table2.Name} column ${table1Column.Name} is not a ForeignKey.`)
+      throw new StatsError(`JOIN ERROR: Table ${this._table2.Name} column ${table1Column.Name} is not a ForeignKey.`)
     }
 
     let newColumns: Array<Column> = new Array<Column>();

@@ -2,7 +2,7 @@
 import {
   IExecute,
   WhereExpression,
-  DatabaseError
+  StatsError
 } from './../../../../core/index';
 
 import { Database } from './../../database/index';
@@ -29,7 +29,7 @@ export class Update implements IExecute {
     this._table = this._database.Table(queryUpdate.State()[0]);
 
     if (!this._table) {
-      throw new DatabaseError(`UPDATE: Table ${queryUpdate.State()[0]} does not exist in database!`)
+      throw new StatsError(`UPDATE: Table ${queryUpdate.State()[0]} does not exist in database!`)
     }
 
     this._database = database;

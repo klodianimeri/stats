@@ -1,6 +1,6 @@
 import {
   IExecute,
-  DatabaseError
+  StatsError
 } from './../../../../core/index';
 
 import {
@@ -45,13 +45,13 @@ export class Select implements IExecute {
     this._select = querySelect.State()[0];
 
     if (!querySelect.State()[1]) {
-      throw new DatabaseError(`SELECT: Table not defined!`);
+      throw new StatsError(`SELECT: Table not defined!`);
     }
 
     this._from = this._database.Table(querySelect.State()[1]);
 
     if (!this._from) {
-      throw new DatabaseError(`SELECT: Table ${querySelect.State()[1].toString()} does not exist in database!`);
+      throw new StatsError(`SELECT: Table ${querySelect.State()[1].toString()} does not exist in database!`);
     }
 
     if (querySelect.State()[2]) {
@@ -72,7 +72,7 @@ export class Select implements IExecute {
     if (querySelect.State()[6]) {
       let innerJoinTable = this._database.Table(querySelect.State()[6].State()[0]);
       if (!innerJoinTable) {
-        throw new DatabaseError(`SELECT Inner Join: Table ${innerJoinTable} does not exist in database!`);
+        throw new StatsError(`SELECT Inner Join: Table ${innerJoinTable} does not exist in database!`);
       }
       this._innerJoin = new InnerJoin(innerJoinTable, querySelect.State()[6].State()[1], querySelect.State()[6].State()[2]);
     }

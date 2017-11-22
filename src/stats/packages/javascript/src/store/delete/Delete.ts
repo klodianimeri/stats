@@ -1,6 +1,6 @@
 import {
   IExecute,
-  DatabaseError,
+  StatsError,
   WhereExpression
 } from './../../../../core/index';
 
@@ -28,7 +28,7 @@ export class Delete implements IExecute {
     this._into = this._database.Table(queryDelete.State()[0]);
 
     if (!this._into) {
-      throw new DatabaseError(`DELETE: Table ${queryDelete.State()[0]} does not exist in database!`);
+      throw new StatsError(`DELETE: Table ${queryDelete.State()[0]} does not exist in database!`);
     }
 
     this._where = new Where(...queryDelete.State()[1].State());

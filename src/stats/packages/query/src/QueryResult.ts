@@ -1,6 +1,6 @@
 import {
-  DatabaseInfo,
-  DatabaseError,
+  StatsInfo,
+  StatsError,
   IQueryResult
 } from './../../core/index';
 
@@ -15,9 +15,9 @@ export class QueryResult implements IQueryResult {
     this.Result = table;
 
     if (this.Success) {
-      new DatabaseInfo(`QUERY RESULT: Query executed succesfully!`);
+      new StatsInfo(`QUERY RESULT: Query executed succesfully!`);
     } else {
-      new DatabaseError(`QUERY RESULT: Query failed! Message: ${this.Message}.`)
+      new StatsError(`QUERY RESULT: Query failed! Message: ${this.Message}.`)
     }
 
   }

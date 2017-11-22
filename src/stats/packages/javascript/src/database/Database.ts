@@ -1,5 +1,5 @@
 import { Relationship, Table } from './../index';
-import { DatabaseError } from './../../../core/index';
+import { StatsError } from './../../../core/index';
 
 export class Database {
   private _name: string;
@@ -9,7 +9,7 @@ export class Database {
   constructor(name: string, ...tables: Array<Table>) {
     tables.forEach((table) => {
       if (this._tables[table.Name]) {
-        throw new DatabaseError(`DATABASE: Table with name ${table.Name} exists in database!`);
+        throw new StatsError(`DATABASE: Table with name ${table.Name} exists in database!`);
       }
 
       this._tables[table.Name] = table;
