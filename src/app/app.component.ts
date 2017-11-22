@@ -1,10 +1,10 @@
 import { Database, Table, Store } from './../stats/packages/javascript/index';
 import { Query, QueryResult, WhereExpression, WhereOperator, ComparisonOperator } from './../stats/packages/index';
 
-import { 
+import {
   Component,
   OnInit
- } from '@angular/core';
+} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ import {
 export class AppComponent implements OnInit {
   title = 'app';
 
-  ngOnInit(){
+  ngOnInit() {
     let person = new Table('person').ConstructFromObject({ Name: 'Klodi', Age: 4, Surname: 'Imeri' });
     let inventory = new Table('inventory').ConstructFromObject({ PersonName: 'Klodi', Product: 'TV', Amount: 1, Price: 435 });
     inventory.Column('PersonName').MakeForeignKey();
@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
     );
     console.log('result', result);
 
-
+    query.Update(u => u.Update('person').Set(['Ager', 23], ['Naeme', 'Dioklocian']).Where(new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Diklo')));
     // console.log(result);
     // console.log(inventory);
 

@@ -19,8 +19,9 @@ export class Update implements IState {
   constructor() {
   }
 
-  public Update(table: string) {
+  public Update(table: string): Update {
     this._table = table;
+    return this;
   }
 
   public Set(...columnValues: Array<[string, any]>): Update {
