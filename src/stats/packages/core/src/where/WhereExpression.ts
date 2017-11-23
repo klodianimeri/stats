@@ -4,7 +4,8 @@ import { StatsError } from "./../errors/index";
  */
 export enum WhereOperator {
   And,
-  Or
+  Or,
+  Not
 }
 
 /**
@@ -108,7 +109,8 @@ export class WhereExpression {
         return this.Compare(a[this._propertyColumn]) && result;
       case WhereOperator.Or:
         return this.Compare(a[this._propertyColumn]) || result;
-
+      case WhereOperator.Not:
+        return !(this.Compare(a[this.PropertyColumn])) && result;
       default:
         return false;
     }
