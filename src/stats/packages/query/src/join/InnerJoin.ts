@@ -1,4 +1,5 @@
-import { IJoin, Select, IState } from "./../../index";
+import { IJoin, JoinType } from './../../../core/index';
+import { Select, IState } from "./../../index";
 
 export class InnerJoin implements IJoin, IState {
   private _select: Select;
@@ -19,5 +20,9 @@ export class InnerJoin implements IJoin, IState {
 
   public State(): [string, string, string] {
     return [this._table2, this._table1Col, this._table2Col];
+  }
+
+  JoinType(): JoinType {
+    return JoinType.InnerJoin;
   }
 }

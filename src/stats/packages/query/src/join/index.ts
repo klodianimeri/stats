@@ -1,2 +1,4 @@
 export * from "./InnerJoin";
-export * from "./IJoin";
+export * from "./LeftJoin";
+export * from "./RightJoin";
+export * from "./FullJoin";

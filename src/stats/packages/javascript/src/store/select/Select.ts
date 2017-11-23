@@ -1,6 +1,7 @@
 import {
   IExecute,
-  StatsError
+  StatsError,
+  JoinType
 } from './../../../../core/index';
 
 import {
@@ -12,7 +13,7 @@ import { Database } from './../../database/index';
 import { Table, Column, Row } from './../../table/index';
 
 import { Where } from './../where/index';
-import { InnerJoin } from './../join/index';
+import { IJoin, InnerJoin } from './../join/index';
 import { OrderAscending, OrderDescending } from './Order';
 import { Distinct } from './Distinct';
 import { Limit } from './Limit';
@@ -26,7 +27,7 @@ export class Select implements IExecute {
   private _orderAscending: OrderAscending;
   private _orderDescending: OrderDescending;
   private _distinct: Distinct;
-  private _innerJoin: InnerJoin;
+  private _joins: Array<IJoin> = Array<IJoin>();
   private _limit: Limit;
 
   constructor(database: Database, querySelect: QuerySelect) {
@@ -41,31 +42,45 @@ export class Select implements IExecute {
 
     this._from = this._database.Table(querySelect.State()[1]);
 
+    // SET TABLE
     if (!this._from) {
       throw new StatsError(`SELECT: Table ${querySelect.State()[1].toString()} does not exist in database!`);
     }
 
+    // SET WHERE
     if (querySelect.State()[2]) {
       this._where = new Where(...querySelect.State()[2].State());
     }
+
+    // SET ORDER ASCENDING
     if (querySelect.State()[3]) {
       this._orderAscending = new OrderAscending(...querySelect.State()[3].State());
     }
 
+    // SET ORDER DESCENDING    
     if (querySelect.State()[4]) {
       this._orderDescending = new OrderDescending(...querySelect.State()[4].State());
     }
 
+    // SET DISTINCT
     if (querySelect.State()[5]) {
       this._distinct = new Distinct(...querySelect.State()[5].State());
     }
 
+    // SET JOINS
     if (querySelect.State()[6]) {
-      let innerJoinTable = this._database.Table(querySelect.State()[6].State()[0]);
-      if (!innerJoinTable) {
-        throw new StatsError(`SELECT Inner Join: Table ${innerJoinTable} does not exist in database!`);
+      if (querySelect.State()[6].length) {
+        querySelect.State()[6].forEach(element => {
+          let joinTable = this._database.Table(element.State()[0]);
+          if (!joinTable) {
+            throw new StatsError(`SELECT Join: Table ${joinTable} does not exist in database!`);
+          }
+          if (element.JoinType() == JoinType.InnerJoin) {
+            this._joins.push(new InnerJoin(joinTable, element.State()[1], element.State()[2]));
+          }
+        });
       }
-      this._innerJoin = new InnerJoin(innerJoinTable, querySelect.State()[6].State()[1], querySelect.State()[6].State()[2]);
+
     }
 
     if (querySelect.State()[7]) {
@@ -125,10 +140,11 @@ export class Select implements IExecute {
       resultTable = this._limit.ExecuteQuery(resultTable);
     }
 
-    console.log('resultTable: ', resultTable);
+    if (this._joins.length) {
+      this._joins.forEach(element => {
+        resultTable = (<any>element).ExecuteQuery(resultTable);
+      });
 
-    if (this._innerJoin) {
-      resultTable = this._innerJoin.ExecuteQuery(resultTable);
     }
 
     if (this._orderAscending) {

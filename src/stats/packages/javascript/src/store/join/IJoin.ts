@@ -1,6 +1,5 @@
-import { Select } from "./../../index";
+import { JoinType } from '../../../../core/index';
 
 export interface IJoin {
-  On(table1Col: string, table2Col: string): Select;
-  State(): [string, string, string];
+    JoinType(): JoinType;
 }

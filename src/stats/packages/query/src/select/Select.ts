@@ -1,8 +1,13 @@
 import { Where } from './../where/index';
+
 import {
-  IJoin,
-  InnerJoin
+  InnerJoin,
+  LeftJoin,
+  RightJoin,
+  FullJoin
 } from './../join/index';
+
+import { IJoin } from './../../../core/index';
 
 import {
   OrderAscending,
@@ -21,7 +26,7 @@ export class Select implements IState {
   private _orderAscending: OrderAscending;
   private _orderDescending: OrderDescending;
   private _distinct: Distinct;
-  private _innerJoin: IJoin;
+  private _joins: Array<IJoin> = Array<IJoin>();
   private _limit: Limit;
 
   constructor() {
@@ -63,11 +68,30 @@ export class Select implements IState {
   }
 
   public InnerJoin(joinTableName: string): IJoin {
-    this._innerJoin = new InnerJoin(this, joinTableName);
-    return this._innerJoin;
+    let join: IJoin = new InnerJoin(this, joinTableName);
+    this._joins.push(join);
+    return join;
   }
 
-  public State(): [Array<string>, string, Where, OrderAscending, OrderDescending, Distinct, IJoin, Limit] {
-    return [this._select, this._from, this._where, this._orderAscending, this._orderDescending, this._distinct, this._innerJoin, this._limit];
+  public LeftJoin(joinTableName: string): IJoin {
+    let join: IJoin = new LeftJoin(this, joinTableName);
+    this._joins.push(join);
+    return join;
+  }
+
+  public RightJoin(joinTableName: string): IJoin {
+    let join: IJoin = new RightJoin(this, joinTableName);
+    this._joins.push(join);
+    return join;
+  }
+
+  public FullJoin(joinTableName: string): IJoin {
+    let join: IJoin = new FullJoin(this, joinTableName);
+    this._joins.push(join);
+    return join;
+  }
+
+  public State(): [Array<string>, string, Where, OrderAscending, OrderDescending, Distinct, Array<IJoin>, Limit] {
+    return [this._select, this._from, this._where, this._orderAscending, this._orderDescending, this._distinct, this._joins, this._limit];
   }
 }

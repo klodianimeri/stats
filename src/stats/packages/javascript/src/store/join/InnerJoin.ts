@@ -1,5 +1,5 @@
 import {
-  StatsError,
+  StatsError, JoinType,
 } from './../../../../core/index';
 
 import {
@@ -9,7 +9,9 @@ import {
   Row,
 } from './../../table/index';
 
-export class InnerJoin {
+import { IJoin } from './IJoin';
+
+export class InnerJoin implements IJoin {
   private _table1: Table;
   private _table1Col: string;
   private _table2: Table;
@@ -19,6 +21,10 @@ export class InnerJoin {
     this._table2 = joinedTable;
     this._table1Col = table1Col;
     this._table2Col = table2Col;
+  }
+
+  JoinType(): JoinType {
+    return JoinType.InnerJoin;
   }
 
   ExecuteQuery(joinTable: Table): Table {
