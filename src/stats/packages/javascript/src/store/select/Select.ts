@@ -9,23 +9,13 @@ import {
 } from './../../../../query/index';
 
 import { Database } from './../../database/index';
-import {
-  Table,
-  Column,
-  Row,
-} from './../../table/index';
+import { Table, Column, Row } from './../../table/index';
 
 import { Where } from './../where/index';
 import { InnerJoin } from './../join/index';
-
-import {
-  OrderAscending,
-  OrderDescending
-} from './Order';
-
-import {
-  Distinct
-} from './Distinct';
+import { OrderAscending, OrderDescending } from './Order';
+import { Distinct } from './Distinct';
+import { Limit } from './Limit';
 
 export class Select implements IExecute {
   private _database: Database;
@@ -37,6 +27,7 @@ export class Select implements IExecute {
   private _orderDescending: OrderDescending;
   private _distinct: Distinct;
   private _innerJoin: InnerJoin;
+  private _limit: Limit;
 
   constructor(database: Database, querySelect: QuerySelect) {
     this._database = database;
@@ -75,6 +66,10 @@ export class Select implements IExecute {
         throw new StatsError(`SELECT Inner Join: Table ${innerJoinTable} does not exist in database!`);
       }
       this._innerJoin = new InnerJoin(innerJoinTable, querySelect.State()[6].State()[1], querySelect.State()[6].State()[2]);
+    }
+
+    if (querySelect.State()[7]) {
+      this._limit = new Limit(querySelect.State()[7].State());
     }
   }
 
@@ -118,13 +113,19 @@ export class Select implements IExecute {
   public Execute(): QueryResult {
     let resultTable = Object.assign(new Table(this._from.Name), this._from);
 
+    if (this._where) {
+      resultTable = this._where.ExecuteQuery(resultTable);
+    }
+
     if (this._distinct) {
       resultTable = this._distinct.ExecuteQuery(resultTable);
     }
 
-    if (this._where) {
-      resultTable = this._where.ExecuteQuery(resultTable);
+    if (this._limit) {
+      resultTable = this._limit.ExecuteQuery(resultTable);
     }
+
+    console.log('resultTable: ', resultTable);
 
     if (this._innerJoin) {
       resultTable = this._innerJoin.ExecuteQuery(resultTable);

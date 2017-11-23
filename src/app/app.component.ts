@@ -70,12 +70,13 @@ export class AppComponent implements OnInit {
     //   .End();
 
     let result = query.Select(s => s.Select('Name', 'Age', 'Price')
+      .Limit(4)
       .From('person')
-      .Where(
-      //new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
-      new WhereExpression(WhereOperator.Not, 'Name', ComparisonOperator.Equal, 'Klodi'),
-      //new WhereExpression(WhereOperator.And, 'Age', ComparisonOperator.Between, [23, 25])
-    )
+      //   .Where(
+      //   new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
+      //   //new WhereExpression(WhereOperator.Not, 'Name', ComparisonOperator.Equal, 'Klodi'),
+      //   //new WhereExpression(WhereOperator.And, 'Age', ComparisonOperator.Between, [23, 25])
+      // )
       .OrderDescending('Age')
       // .InnerJoin('inventory')
       // .On('Name', 'PersonName')
