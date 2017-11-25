@@ -1,5 +1,5 @@
 import { Database, Table, Store } from './../stats/packages/javascript/index';
-import { Query, QueryResult, WhereExpression, WhereOperator, ComparisonOperator } from './../stats/packages/index';
+import { Query, QueryResult, WhereExpression, WhereOperator, ComparisonOperator, Count } from './../stats/packages/index';
 
 import {
   Component,
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     //   // .OrderAscending('Name')
     //   .End();
 
-    let result = query.Select(s => s.Select('Name', 'Age', 'Price')
+    let result = query.Select(s => s.Select('Name', 'Age', 'Price', new Count('Age').Distinct())
       .Limit(4)
       .From('person')
       //   .Where(

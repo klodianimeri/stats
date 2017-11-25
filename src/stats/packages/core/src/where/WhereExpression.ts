@@ -20,6 +20,7 @@ export enum ComparisonOperator {
   LessThanEqual,
   Like,
   In,
+  NotIn,
   Between
 }
 
@@ -88,6 +89,12 @@ export class WhereExpression {
           throw new StatsError("WHERE: Value provided for In is not an array with values!");
         }
         result = (<Array<any>>this._value).indexOf(value) == -1 ? false : true;
+        break;
+      case ComparisonOperator.NotIn:
+        if (((<Array<any>>this._value).length == 0)) {
+          throw new StatsError("WHERE: Value provided for Not In is not an array with values!");
+        }
+        result = (<Array<any>>this._value).indexOf(value) == -1 ? true : false;
         break;
       case ComparisonOperator.Between:
         if (!((<Array<any>>this._value).length == 2)) {

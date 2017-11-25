@@ -1,7 +1,8 @@
 import {
   IExecute,
   StatsError,
-  JoinType
+  JoinType,
+  IFunction
 } from './../../../../core/index';
 
 import {
@@ -11,7 +12,6 @@ import {
 
 import { Database } from './../../database/index';
 import { Table, Column, Row } from './../../table/index';
-
 import { Where } from './../where/index';
 import { IJoin, InnerJoin } from './../join/index';
 import { OrderAscending, OrderDescending } from './Order';
@@ -21,7 +21,7 @@ import { Limit } from './Limit';
 export class Select implements IExecute {
   private _database: Database;
   private _querySelect: QuerySelect;
-  private _select: Array<string>;
+  private _select: Array<string | IFunction>;
   private _from: Table;
   private _where: Where;
   private _orderAscending: OrderAscending;
@@ -93,6 +93,7 @@ export class Select implements IExecute {
     if (this._select.length === 1 && this._select[0] === '*') {
       return table;
     }
+    // TODO Functions
 
     let newColumns: Array<Column> = new Array<Column>();
 
