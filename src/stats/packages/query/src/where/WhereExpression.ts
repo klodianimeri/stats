@@ -1,1 +1,1 @@
-export { WhereExpression, WhereOperator, ComparisonOperator } from './../../../core/index';
+export { WhereExpression, BooleanOperator, ComparisonOperator } from './../../../core/index';

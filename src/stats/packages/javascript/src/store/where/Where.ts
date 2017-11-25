@@ -26,7 +26,7 @@ export class Where {
       let pass: boolean = true;
 
       this._wheres.forEach((whereExpression, index) => {
-        pass = whereExpression.CompareWhereOperator(row.Row, pass);
+        pass = whereExpression.CompareBooleanOperator(row.Row, pass);
       });
 
       if (pass) { newRows.push(row); }

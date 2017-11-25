@@ -1,8 +1,8 @@
 import { StatsError } from "./../errors/index";
 /**
- * WhereOperator
+ * BooleanOperator
  */
-export enum WhereOperator {
+export enum BooleanOperator {
   And,
   Or,
   Not
@@ -29,21 +29,21 @@ export enum ComparisonOperator {
 * WhereExpression
 */
 export class WhereExpression {
-  private _whereOperator: WhereOperator;
+  private _BooleanOperator: BooleanOperator;
   private _propertyColumn: string;
   private _comparisonOperator: ComparisonOperator;
   private _value: any;
 
-  constructor(whereOperator: WhereOperator, propertyColumn: string, comparisonOperator: ComparisonOperator, value: any) {
-    this._whereOperator = whereOperator;
+  constructor(BooleanOperator: BooleanOperator, propertyColumn: string, comparisonOperator: ComparisonOperator, value: any) {
+    this._BooleanOperator = BooleanOperator;
     this._propertyColumn = propertyColumn;
     this._comparisonOperator = comparisonOperator;
     this._value = value;
   }
 
 
-  public get WhereOperator(): WhereOperator {
-    return this._whereOperator;
+  public get BooleanOperator(): BooleanOperator {
+    return this._BooleanOperator;
   }
 
 
@@ -110,13 +110,13 @@ export class WhereExpression {
     return result;
   }
 
-  public CompareWhereOperator(a: Object, result: boolean): boolean {
-    switch (this.WhereOperator) {
-      case WhereOperator.And:
+  public CompareBooleanOperator(a: Object, result: boolean): boolean {
+    switch (this.BooleanOperator) {
+      case BooleanOperator.And:
         return this.Compare(a[this._propertyColumn]) && result;
-      case WhereOperator.Or:
+      case BooleanOperator.Or:
         return this.Compare(a[this._propertyColumn]) || result;
-      case WhereOperator.Not:
+      case BooleanOperator.Not:
         return !(this.Compare(a[this.PropertyColumn])) && result;
       default:
         return false;

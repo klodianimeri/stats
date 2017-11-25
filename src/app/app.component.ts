@@ -1,5 +1,5 @@
 import { Database, Table, Store } from './../stats/packages/javascript/index';
-import { Query, QueryResult, WhereExpression, WhereOperator, ComparisonOperator, Count } from './../stats/packages/index';
+import { Query, QueryResult, WhereExpression, BooleanOperator, ComparisonOperator, Count } from './../stats/packages/index';
 
 import {
   Component,
@@ -57,13 +57,13 @@ export class AppComponent implements OnInit {
     // let result = query
     //   // .Delete()
     //   // .From(person)
-    //   // .Where(new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
-    //   // new WhereExpression(WhereOperator.Or, 'Age', ComparisonOperator.Equal, 25)).End();
+    //   // .Where(new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
+    //   // new WhereExpression(BooleanOperator.Or, 'Age', ComparisonOperator.Equal, 25)).End();
     //   .Select('Name', 'Surname', 'Age')
     //   //.Distinct('Name', 'Surname')
     //   .From('person')
-    //   .Where(new WhereExpression(WhereOperator.And, 'Age', ComparisonOperator.Between, [23, 24]),
-    //   new WhereExpression(WhereOperator.And, 'Surname', ComparisonOperator.Equal, 'Imeri'))
+    //   .Where(new WhereExpression(BooleanOperator.And, 'Age', ComparisonOperator.Between, [23, 24]),
+    //   new WhereExpression(BooleanOperator.And, 'Surname', ComparisonOperator.Equal, 'Imeri'))
     //   // .OrderDescending('Age')
     //   // .OrderAscending('Age')
     //   // .OrderAscending('Name')
@@ -73,9 +73,9 @@ export class AppComponent implements OnInit {
       .Limit(4)
       .From('person')
       //   .Where(
-      //   new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
-      //   //new WhereExpression(WhereOperator.Not, 'Name', ComparisonOperator.Equal, 'Klodi'),
-      //   //new WhereExpression(WhereOperator.And, 'Age', ComparisonOperator.Between, [23, 25])
+      //   new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
+      //   //new WhereExpression(BooleanOperator.Not, 'Name', ComparisonOperator.Equal, 'Klodi'),
+      //   //new WhereExpression(BooleanOperator.And, 'Age', ComparisonOperator.Between, [23, 25])
       // )
       .OrderDescending('Age')
       // .InnerJoin('inventory')
@@ -83,14 +83,14 @@ export class AppComponent implements OnInit {
     );
     console.log('result', result);
 
-    query.Update(u => u.Update('person').Set(['Ager', 23], ['Naeme', 'Dioklocian']).Where(new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Diklo')));
+    query.Update(u => u.Update('person').Set(['Ager', 23], ['Naeme', 'Dioklocian']).Where(new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Diklo')));
     // console.log(result);
     // console.log(inventory);
 
     // let innerJoinResult = query.Select('person.Name', 'inventory.Product', 'inventory.Price')
     //   .From('person')
-    //   .Where(new WhereExpression(WhereOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
-    //   new WhereExpression(WhereOperator.Or, 'Name', ComparisonOperator.Equal, 'Diklo'))
+    //   .Where(new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
+    //   new WhereExpression(BooleanOperator.Or, 'Name', ComparisonOperator.Equal, 'Diklo'))
     //   .OrderDescending('Age')
     //   .InnerJoin('inventory')
     //   .On('Name', 'PersonName')
