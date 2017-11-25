@@ -31,9 +31,10 @@ export class TypeUtilities {
 
   static RepresentingToDataType(representingType: RepresentingType): DataType {
     switch (representingType) {
+      case RepresentingType.String: return DataType.String;
+      case RepresentingType.Number: return DataType.Integer;
       case RepresentingType.Array: return DataType.Set;
       case RepresentingType.Boolean: return DataType.Boolean;
-      case RepresentingType.Number: return DataType.Integer;
       case RepresentingType.Date: return DataType.Date;
       case RepresentingType.Object: return DataType.Complex;
     }
@@ -55,11 +56,12 @@ export class TypeUtilities {
   }
 
   static PrimitiveToRepresentingType(primitiveType: any): RepresentingType {
-    switch (typeof primitiveType) {
-      case 'boolean': return RepresentingType.Boolean;
-      case 'number': return RepresentingType.Number;
-      case 'string': return RepresentingType.String;
-      case 'object': return RepresentingType.Object;
+    switch (Object.prototype.toString.call(primitiveType)) {
+      case '[object Boolean]': return RepresentingType.Boolean;
+      case '[object Number]': return RepresentingType.Number;
+      case '[object String]': return RepresentingType.String;
+      case '[object Object]': return RepresentingType.Object;
+      case '[object Date]': return RepresentingType.Date;
     }
   }
 

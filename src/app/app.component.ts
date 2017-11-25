@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   ngOnInit() {
-    let person = new Table('person').ConstructFromObject({ Name: 'Klodi', Age: 4, Surname: 'Imeri' });
+    let person = new Table('person').ConstructFromObject({ Name: 'Klodi', Age: 4, Surname: 'Imeri', Registered: true, Birthday: new Date('29-05-1994') });
     let inventory = new Table('inventory').ConstructFromObject({ PersonName: 'Klodi', Product: 'TV', Amount: 1, Price: 435 });
     inventory.Column('PersonName').MakeForeignKey();
     person.Column('Name').MakePrimaryKey();
