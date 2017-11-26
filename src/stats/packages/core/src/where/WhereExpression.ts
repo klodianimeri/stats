@@ -1,29 +1,6 @@
 import { StatsError } from "./../errors/index";
-/**
- * BooleanOperator
- */
-export enum BooleanOperator {
-  And,
-  Or,
-  Not
-}
-
-/**
-* ComparisonOperator
-*/
-export enum ComparisonOperator {
-  Equal,
-  NotEqual,
-  Grater,
-  GreaterThanEqual,
-  Less,
-  LessThanEqual,
-  Like,
-  In,
-  NotIn,
-  Between
-}
-
+import { BooleanOperator } from './../operator/BooleanOperator';
+import { ComparisonOperator } from './../operator/ComparisonOperator';
 
 /**
 * WhereExpression

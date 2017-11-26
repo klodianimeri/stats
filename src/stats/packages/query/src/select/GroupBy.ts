@@ -1,9 +1,12 @@
+import { GroupByExpression } from './../../../core/index';
+
 import {
     IState,
     Select
 } from './../../index';
 
 export class GroupBy implements IState {
+    private _havings: Array<GroupByExpression>;
     private _select: Select;
     private _groupby: Array<string>;
 
@@ -12,9 +15,8 @@ export class GroupBy implements IState {
         this._groupby = groupby;
     }
 
-    Having(): Select {
-        // this._table1Col = table1Col;
-        // this._table2Col = table2Col;
+    Having(...havings: Array<GroupByExpression>): Select {
+        this._havings = havings;
         return this._select;
     }
 

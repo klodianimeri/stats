@@ -1,0 +1,11 @@
+{
+    "name": "stats",
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {},
+    "private": true,
+    "dependencies": {
+        "request": "^2.83.0"
+    },
+    "devDependencies": {}
+}
