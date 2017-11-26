@@ -15,7 +15,7 @@ import {
 } from './Order';
 
 import { Limit } from './Limit';
-import { Distinct } from './Distinct';
+import { Distinct } from './../distinct/Distinct';
 import { IState } from './../IState';
 import { WhereExpression } from './../where/WhereExpression';
 

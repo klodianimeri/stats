@@ -3,6 +3,7 @@ export * from './Query';
 export * from './QueryResult'
 export * from './insert/index';
 export * from './select/index';
+export * from './distinct/index';
 export * from './where/index';
 export * from './delete/index';
 export * from './update/index';
