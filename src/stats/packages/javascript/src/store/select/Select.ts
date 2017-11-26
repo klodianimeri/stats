@@ -2,7 +2,9 @@ import {
   IExecute,
   StatsError,
   JoinType,
-  IFunction
+  TSelect,
+  IAggregateFunction as QueryIAggregateFunction,
+  StatsWarn
 } from './../../../../core/index';
 
 import {
@@ -15,13 +17,15 @@ import { Table, Column, Row } from './../../table/index';
 import { Where } from './../where/index';
 import { IJoin, InnerJoin } from './../join/index';
 import { OrderAscending, OrderDescending } from './Order';
-import { Distinct } from './Distinct';
+import { Distinct } from './../distinct/Distinct';
 import { Limit } from './Limit';
+import { IAggregateFunction } from './../aggregatefunction/IAggregateFunction';
+import { ConvertAggregateFunction } from './../aggregatefunction/Convert';
 
 export class Select implements IExecute {
   private _database: Database;
   private _querySelect: QuerySelect;
-  private _select: Array<string | IFunction>;
+  private _select: Array<TSelect>;
   private _from: Table;
   private _where: Where;
   private _orderAscending: OrderAscending;
@@ -88,13 +92,29 @@ export class Select implements IExecute {
     }
   }
 
-  private ExecuteSelect(table: Table): Table {
-    // SELECT *
-    if (this._select.length === 1 && this._select[0] === '*') {
-      return table;
-    }
-    // TODO Functions
+  private ExcecuteAgregateFunction(table: Table): Table {
+    let queryAggregateFunctions: Array<TSelect> = this._select.filter((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
+    new StatsWarn("Inside Aggregate", queryAggregateFunctions);
+    let newColumns: Array<Column> = new Array<Column>();
 
+    let newRows: Array<Row> = new Array<Row>();
+    let newRow = new Row();
+
+    queryAggregateFunctions.forEach((value: TSelect) => {
+      let aggregateFunction: IAggregateFunction = ConvertAggregateFunction.ConvertAggregateFunction(<QueryIAggregateFunction>value);
+      let newColumn: Column = new Column(aggregateFunction.ColumnName(), aggregateFunction.DataType());
+      newColumns.push(newColumn);
+      newRow.Row[aggregateFunction.ColumnName()] = aggregateFunction.ExecuteAggregateFunction(table);
+    });
+
+    newRows.push(newRow);
+
+    let newTable: Table = new Table(table.Name).Construct(newColumns, newRows);
+
+    return newTable;
+  }
+
+  private ExecuteColumns(table: Table): Table {
     let newColumns: Array<Column> = new Array<Column>();
 
     table.Columns.forEach((column, index) => {
@@ -124,6 +144,21 @@ export class Select implements IExecute {
     let newTable: Table = new Table(table.Name).Construct(newColumns, newRows);
 
     return newTable;
+  }
+
+  private ExecuteSelect(table: Table): Table {
+    // SELECT *
+    if (this._select.length === 1 && this._select[0] === '*') {
+      return table;
+    }
+    // TODO Functions
+    let anyAgregateFunction: boolean = this._select.some((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
+
+    if (anyAgregateFunction) {
+      return this.ExcecuteAgregateFunction(table)
+    }
+
+    return this.ExecuteColumns(table);
   }
 
   public Execute(): QueryResult {

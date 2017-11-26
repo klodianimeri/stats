@@ -1,6 +1,6 @@
-import { IFunction } from './../../../core/index';
+import { IAggregateFunction } from './../../../core/index';
 
-export class Sum implements IFunction {
+export class Sum implements IAggregateFunction {
     private _columnName: string;
     private _distinct: boolean;
     private _alias: string;
@@ -9,13 +9,13 @@ export class Sum implements IFunction {
         this._columnName = columnName;
     }
 
-    Distinct(): IFunction {
+    Distinct(): IAggregateFunction {
         this._distinct = true;
         return this;
     }
 
-    As(alias: string): IFunction {
-        this._alias;
+    As(alias: string): IAggregateFunction {
+        this._alias = alias;
         return this;
     }
 

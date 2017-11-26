@@ -1,5 +1,16 @@
 import { Database, Table, Store } from './../stats/packages/javascript/index';
-import { Query, QueryResult, WhereExpression, BooleanOperator, ComparisonOperator, Count } from './../stats/packages/index';
+import {
+  Query,
+  QueryResult,
+  WhereExpression,
+  BooleanOperator,
+  ComparisonOperator,
+  Avg,
+  Count,
+  Max,
+  Min,
+  Sum,
+} from './../stats/packages/index';
 
 import {
   Component,
@@ -32,6 +43,7 @@ export class AppComponent implements OnInit {
     query.Insert(i => i.Insert('Name', 'Age', 'Surname').Into('person').Values('Klodian', 23, 'Imeri'));
     query.Insert(i => i.Insert('Name', 'Age', 'Surname').Into('person').Values('Klodian', 23, 'Imeri'));
     query.Insert(i => i.Insert('Name', 'Age', 'Surname').Into('person').Values('Klodiani', 24, 'Imeri'));
+    //query.Insert(i => i.Insert('Name', 'Age', 'Surname').Into('person').Values('Klodiania', 24, 'Imeri'));
 
     query.Insert(i => i.Insert('PersonName', 'Product', 'Amount', 'Price').Into('inventory').Values('Diklo', 'TV', 1, 356));
     query.Insert(i => i.Insert('PersonName', 'Product', 'Amount', 'Price').Into('inventory').Values('Klodi', 'TV', 1, 657));
@@ -69,8 +81,15 @@ export class AppComponent implements OnInit {
     //   // .OrderAscending('Name')
     //   .End();
 
-    let result = query.Select(s => s.Select('Name', 'Age', 'Price', new Count('Age').Distinct())
-      .Limit(4)
+    let result = query.Select(s => s.Select('Name',
+      'Age',
+      'Price',
+      new Avg('Age').Distinct().As('Avarage'),
+      new Count('Age').Distinct().As('Count'),
+      new Sum('Age').Distinct().As('Sum'),
+      new Min('Age').Distinct().As('Min'),
+      new Max('Age').Distinct().As('Max'))
+      //.Limit(4)
       .From('person')
       //   .Where(
       //   new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),

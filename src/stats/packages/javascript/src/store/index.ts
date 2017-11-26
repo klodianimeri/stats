@@ -1,4 +1,5 @@
 export * from './Store';
+export * from './distinct/index';
 export * from './select/index';
 export * from './where/index';
 export * from './insert/index';

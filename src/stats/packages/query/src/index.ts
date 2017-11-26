@@ -7,4 +7,4 @@ export * from './where/index';
 export * from './delete/index';
 export * from './update/index';
 export * from './join/index';
-export * from './function/index';
+export * from './aggregatefunction/index';

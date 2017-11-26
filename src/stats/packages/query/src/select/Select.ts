@@ -7,7 +7,7 @@ import {
   FullJoin
 } from './../join/index';
 
-import { IJoin, IFunction } from './../../../core/index';
+import { IJoin, TSelect } from './../../../core/index';
 
 import {
   OrderAscending,
@@ -20,7 +20,7 @@ import { IState } from './../IState';
 import { WhereExpression } from './../where/WhereExpression';
 
 export class Select implements IState {
-  private _select: Array<string | IFunction>;
+  private _select: Array<TSelect>;
   private _from: string;
   private _where: Where;
   private _orderAscending: OrderAscending;
@@ -32,7 +32,7 @@ export class Select implements IState {
   constructor() {
   }
 
-  public Select(...selects: Array<string | IFunction>): Select {
+  public Select(...selects: Array<TSelect>): Select {
     this._select = selects;
     return this;
   }
@@ -91,7 +91,7 @@ export class Select implements IState {
     return join;
   }
 
-  public State(): [Array<string | IFunction>, string, Where, OrderAscending, OrderDescending, Distinct, Array<IJoin>, Limit] {
+  public State(): [Array<TSelect>, string, Where, OrderAscending, OrderDescending, Distinct, Array<IJoin>, Limit] {
     return [this._select, this._from, this._where, this._orderAscending, this._orderDescending, this._distinct, this._joins, this._limit];
   }
 }

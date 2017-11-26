@@ -1,18 +1,18 @@
 import { StatsError } from "./../errors/index";
 import { BooleanOperator } from './../operator/BooleanOperator';
 import { ComparisonOperator } from './../operator/ComparisonOperator';
-import { IFunction } from './../function/IFunction';
+import { IAggregateFunction } from './../istore/aggregatefunction';
 
 /**
 * GroupByExpression
 */
 export class GroupByExpression {
     private _BooleanOperator: BooleanOperator;
-    private _aggregateFunction: IFunction;
+    private _aggregateFunction: IAggregateFunction;
     private _comparisonOperator: ComparisonOperator;
     private _value: any;
 
-    constructor(BooleanOperator: BooleanOperator, aggregateFunction: IFunction, comparisonOperator: ComparisonOperator, value: any) {
+    constructor(BooleanOperator: BooleanOperator, aggregateFunction: IAggregateFunction, comparisonOperator: ComparisonOperator, value: any) {
         this._BooleanOperator = BooleanOperator;
         this._aggregateFunction = aggregateFunction;
         this._comparisonOperator = comparisonOperator;
@@ -25,7 +25,7 @@ export class GroupByExpression {
     }
 
 
-    public get AggregateFunction(): IFunction {
+    public get AggregateFunction(): IAggregateFunction {
         return this._aggregateFunction;
     }
 
