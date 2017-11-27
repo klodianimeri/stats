@@ -7,7 +7,12 @@ import {
   FullJoin
 } from './../join/index';
 
-import { IJoin, TSelect } from './../../../core/index';
+import {
+  IJoin,
+  TSelect,
+  StatsError,
+  HavingExpression
+} from './../../../core/index';
 
 import {
   OrderAscending,
@@ -18,6 +23,7 @@ import { Limit } from './Limit';
 import { Distinct } from './../distinct/Distinct';
 import { IState } from './../IState';
 import { WhereExpression } from './../where/WhereExpression';
+import { GroupBy } from './GroupBy';
 
 export class Select implements IState {
   private _select: Array<TSelect>;
@@ -28,6 +34,7 @@ export class Select implements IState {
   private _distinct: Distinct;
   private _joins: Array<IJoin> = Array<IJoin>();
   private _limit: Limit;
+  private _groupby: GroupBy;
 
   constructor() {
   }
@@ -67,6 +74,19 @@ export class Select implements IState {
     return this;
   }
 
+  public GroupBy(...groupby: Array<string>): Select {
+    this._groupby = new GroupBy(...groupby);
+    return this;
+  }
+
+  public Having(...havings: Array<HavingExpression>): Select {
+    if (!this._groupby) {
+      throw new StatsError(`SELECT HAVING: Group by should be specified before applying having!`);
+    }
+    this._groupby.Having(...havings);
+    return this;
+  }
+
   public InnerJoin(joinTableName: string): IJoin {
     let join: IJoin = new InnerJoin(this, joinTableName);
     this._joins.push(join);
@@ -91,7 +111,7 @@ export class Select implements IState {
     return join;
   }
 
-  public State(): [Array<TSelect>, string, Where, OrderAscending, OrderDescending, Distinct, Array<IJoin>, Limit] {
-    return [this._select, this._from, this._where, this._orderAscending, this._orderDescending, this._distinct, this._joins, this._limit];
+  public State(): [Array<TSelect>, string, Where, OrderAscending, OrderDescending, Distinct, Array<IJoin>, GroupBy, Limit] {
+    return [this._select, this._from, this._where, this._orderAscending, this._orderDescending, this._distinct, this._joins, this._groupby, this._limit];
   }
 }

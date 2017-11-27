@@ -81,16 +81,20 @@ export class AppComponent implements OnInit {
     //   // .OrderAscending('Name')
     //   .End();
 
-    let result = query.Select(s => s.Select('Name',
-      'Age',
-      'Price',
-      new Avg('Age').Distinct().As('Avarage'),
-      new Count('Age').Distinct().As('Count'),
-      new Sum('Age').Distinct().As('Sum'),
-      new Min('Age').Distinct().As('Min'),
-      new Max('Age').Distinct().As('Max'))
+    let result = query.Select(s => s.Select(
+      '*'
+      // 'Name',
+      // 'Age',
+      // 'Price',
+      // new Avg('Age').Distinct().As('Avarage'),
+      // new Count('Age').Distinct().As('Count'),
+      // new Sum('Age').Distinct().As('Sum'),
+      // new Min('Age').Distinct().As('Min'),
+      // new Max('Age').Distinct().As('Max')
+    )
       //.Limit(4)
       .From('person')
+      .GroupBy('Name', 'Age')
       //   .Where(
       //   new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Klodi'),
       //   //new WhereExpression(BooleanOperator.Not, 'Name', ComparisonOperator.Equal, 'Klodi'),

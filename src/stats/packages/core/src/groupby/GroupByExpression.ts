@@ -6,7 +6,7 @@ import { IAggregateFunction } from './../istore/aggregatefunction';
 /**
 * GroupByExpression
 */
-export class GroupByExpression {
+export class HavingExpression {
     private _BooleanOperator: BooleanOperator;
     private _aggregateFunction: IAggregateFunction;
     private _comparisonOperator: ComparisonOperator;

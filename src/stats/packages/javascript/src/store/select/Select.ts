@@ -18,6 +18,7 @@ import { Where } from './../where/index';
 import { IJoin, InnerJoin } from './../join/index';
 import { OrderAscending, OrderDescending } from './Order';
 import { Distinct } from './../distinct/Distinct';
+import { GroupBy } from './GroupBy';
 import { Limit } from './Limit';
 import { IAggregateFunction } from './../aggregatefunction/IAggregateFunction';
 import { ConvertAggregateFunction } from './../aggregatefunction/Convert';
@@ -32,6 +33,7 @@ export class Select implements IExecute {
   private _orderDescending: OrderDescending;
   private _distinct: Distinct;
   private _joins: Array<IJoin> = Array<IJoin>();
+  private _groupby: GroupBy;
   private _limit: Limit;
 
   constructor(database: Database, querySelect: QuerySelect) {
@@ -88,13 +90,15 @@ export class Select implements IExecute {
     }
 
     if (querySelect.State()[7]) {
-      this._limit = new Limit(querySelect.State()[7].State());
+      this._groupby = new GroupBy(querySelect.State()[7].State()[0], querySelect.State()[7].State()[1]);
+    }
+    if (querySelect.State()[8]) {
+      this._limit = new Limit(querySelect.State()[8].State());
     }
   }
 
   private ExcecuteAgregateFunction(table: Table): Table {
     let queryAggregateFunctions: Array<TSelect> = this._select.filter((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
-    new StatsWarn("Inside Aggregate", queryAggregateFunctions);
     let newColumns: Array<Column> = new Array<Column>();
 
     let newRows: Array<Row> = new Array<Row>();
@@ -170,6 +174,10 @@ export class Select implements IExecute {
 
     if (this._distinct) {
       resultTable = this._distinct.ExecuteQuery(resultTable);
+    }
+
+    if (this._groupby) {
+      resultTable = this._groupby.ExecuteQuery(resultTable);
     }
 
     if (this._limit) {
