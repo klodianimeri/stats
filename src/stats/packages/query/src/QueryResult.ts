@@ -11,10 +11,10 @@ export class QueryResult implements IQueryResult {
   public Result: any;
   public Error: IStatsLog;
 
-  constructor(success: boolean, message?: string, table?: any, error?: IStatsLog) {
+  constructor(success: boolean, message?: string, data?: any, error?: IStatsLog) {
     this.Success = success;
     this.Message = message;
-    this.Result = table;
+    this.Result = data;
     this.Error = error;
 
     if (this.Success) {
@@ -23,13 +23,5 @@ export class QueryResult implements IQueryResult {
       new StatsWarn(`QUERY RESULT: Query failed! Message: ${this.Message}.`)
     }
 
-  }
-
-  public AsArray(): Array<Object> {
-    let dataArray: Array<Object> = new Array<Object>();
-
-    this.Result.Data.entries().next((row: any) => { dataArray.push(row); });
-
-    return dataArray;
   }
 }

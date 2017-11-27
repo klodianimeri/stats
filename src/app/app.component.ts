@@ -104,9 +104,10 @@ export class AppComponent implements OnInit {
       // .InnerJoin('inventory')
       // .On('Name', 'PersonName')
     );
-    console.log('result', result);
 
-    query.Update(u => u.Update('person').Set(['Ager', 23], ['Naeme', 'Dioklocian']).Where(new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Diklo')));
+    query.Update(u => u.Update('person').Set(['Age', 23], ['Name', 'Dioklocian']).Where(new WhereExpression(BooleanOperator.And, 'Name', ComparisonOperator.Equal, 'Diklo')));
+
+    console.log('result', result);
     // console.log(result);
     // console.log(inventory);
 
@@ -119,7 +120,7 @@ export class AppComponent implements OnInit {
     //   .On('Name', 'PersonName')
     //   .End();
 
-    console.log(query);
+    // console.log(query);
 
   }
 }
