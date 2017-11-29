@@ -1,6 +1,6 @@
-import { StatsError } from "./../errors/index";
-import { BooleanOperator } from './../operator/BooleanOperator';
-import { ComparisonOperator } from './../operator/ComparisonOperator';
+import { StatsError } from "./../../errors/index";
+import { BooleanOperator } from './../../operator/BooleanOperator';
+import { ComparisonOperator } from './../../operator/ComparisonOperator';
 
 /**
 * WhereExpression

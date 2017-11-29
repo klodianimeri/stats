@@ -1,7 +1,7 @@
-import { StatsError } from "./../errors/index";
-import { BooleanOperator } from './../operator/BooleanOperator';
-import { ComparisonOperator } from './../operator/ComparisonOperator';
-import { IAggregateFunction } from './../istore/aggregatefunction';
+import { StatsError } from "./../../errors/index";
+import { BooleanOperator } from './../../operator/BooleanOperator';
+import { ComparisonOperator } from './../../operator/ComparisonOperator';
+import { IAggregateFunction } from './../../istore/aggregatefunction';
 
 /**
 * GroupByExpression
@@ -18,7 +18,6 @@ export class HavingExpression {
         this._comparisonOperator = comparisonOperator;
         this._value = value;
     }
-
 
     public get BooleanOperator(): BooleanOperator {
         return this._BooleanOperator;

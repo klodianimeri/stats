@@ -121,6 +121,8 @@ export class GroupBy {
 
         });
 
+        console.log('groupbys: ', groupbys);
+
         //TODO RETURN NORMALISED TABLE
         return groupbys.GroupByTable();
     }
