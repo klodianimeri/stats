@@ -20,7 +20,7 @@ export class QueryResult implements IQueryResult {
     if (this.Success) {
       new StatsInfo(`QUERY RESULT: Query executed succesfully!`);
     } else {
-      new StatsWarn(`QUERY RESULT: Query failed! Message: ${this.Message}.`)
+      new StatsWarn(`QUERY RESULT: Query failed! Message: ${this.Message}.`);
     }
 
   }

@@ -1,5 +1,5 @@
 import { IJoin, JoinType } from './../../../core/index';
-import { Select, IState } from "./../../index";
+import { Select, IState } from './../../index';
 
 export class InnerJoin implements IJoin, IState {
   private _select: Select;

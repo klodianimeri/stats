@@ -1,6 +1,6 @@
 export * from './IState';
 export * from './Query';
-export * from './QueryResult'
+export * from './QueryResult';
 export * from './insert/index';
 export * from './select/index';
 export * from './distinct/index';

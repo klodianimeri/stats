@@ -39,6 +39,24 @@ export class GroupByTable {
         return this._groupByTable;
     }
 
+    public AllTables(): Array<Table> {
+        let result: Array<Table> = new Array<Table>();
+        this._allTables(result);
+        return result;
+    }
+
+    private _allTables(allTables: Array<Table>) {
+        if (this._groupByTableIndex !== 0) {
+            allTables.push(this._groupByTable);
+        }
+
+        if (this._childrenGroupByTables.length != 0) {
+            this._childrenGroupByTables.forEach(childGroupByTables => {
+                childGroupByTables._allTables(allTables);
+            });
+        }
+    }
+
     public ChildrenGroupByTables(): Array<GroupByTable> {
         return this._childrenGroupByTables;
     }
@@ -77,7 +95,7 @@ export class GroupBy {
         this._havings = havings;
     }
 
-    ExecuteQuery(input: Table): Table {
+    ExecuteQuery(input: Table): Array<Table> {
 
         let columns: Array<Column> = this._groupby.map((groupbyName) => input.Columns.find((value) => value.Name == groupbyName));
 
@@ -121,9 +139,9 @@ export class GroupBy {
 
         });
 
-        console.log('groupbys: ', groupbys);
+        console.log('groupbys: ', groupbys.AllTables());
 
         //TODO RETURN NORMALISED TABLE
-        return groupbys.GroupByTable();
+        return groupbys.AllTables();
     }
 }

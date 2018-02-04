@@ -1,4 +1,4 @@
-import { Select, IState } from "./../../index";
+import { Select, IState } from './../../index';
 import { IJoin, JoinType } from './../../../core/index';
 
 export class RightJoin implements IJoin, IState {

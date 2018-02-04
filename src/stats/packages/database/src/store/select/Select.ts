@@ -155,40 +155,51 @@ export class Select implements IExecute {
     if (this._select.length === 1 && this._select[0] === '*') {
       return table;
     }
-    // TODO Functions
-    let anyAgregateFunction: boolean = this._select.some((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
-
-    if (anyAgregateFunction) {
-      return this.ExcecuteAgregateFunction(table)
-    }
 
     return this.ExecuteColumns(table);
   }
 
   public Execute(): QueryResult {
+    // FROM & JOIN
+    // WHERE
+    // GROUP BY
+    // HAVING
+    // SELECT
+    // ORDER BY
+    // LIMIT
+
     let resultTable = Object.assign(new Table(this._from.Name), this._from);
 
-    if (this._where) {
-      resultTable = this._where.ExecuteQuery(resultTable);
-    }
-
+    // TODO: CHECK THIS AGAIN
     if (this._distinct) {
       resultTable = this._distinct.ExecuteQuery(resultTable);
-    }
-
-    if (this._groupby) {
-      resultTable = this._groupby.ExecuteQuery(resultTable);
-    }
-
-    if (this._limit) {
-      resultTable = this._limit.ExecuteQuery(resultTable);
     }
 
     if (this._joins.length) {
       this._joins.forEach(element => {
         resultTable = (<any>element).ExecuteQuery(resultTable);
       });
+    }
 
+    if (this._where) {
+      resultTable = this._where.ExecuteQuery(resultTable);
+    }
+
+    let resultTables: Array<Table>;
+    if (this._groupby) {
+      resultTables = this._groupby.ExecuteQuery(resultTable);
+    }
+
+    // EXECUTE SELECT
+    if (this._select) {
+      // TODO Functions
+      let anyAgregateFunction: boolean = this._select.some((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
+
+      if (anyAgregateFunction) {
+        resultTable = this.ExcecuteAgregateFunction(resultTable)
+      } else {
+        resultTable = this.ExecuteSelect(resultTable);
+      }
     }
 
     if (this._orderAscending) {
@@ -199,6 +210,10 @@ export class Select implements IExecute {
       resultTable = this._orderDescending.ExecuteQuery(resultTable);
     }
 
-    return new QueryResult(true, 'Select excecuted succesfully!', this.ExecuteSelect(resultTable));
+    if (this._limit) {
+      resultTable = this._limit.ExecuteQuery(resultTable);
+    }
+
+    return new QueryResult(true, 'Select excecuted succesfully!', resultTable);
   }
 }

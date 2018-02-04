@@ -15,4 +15,3 @@ export class Where implements IState {
     return this._wheres;
   }
 }
-

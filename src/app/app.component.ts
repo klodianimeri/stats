@@ -1,4 +1,4 @@
-import { Database, Table, Store } from './../stats/packages/javascript/index';
+import { Database, Table, Store } from './../stats/packages/database/index';
 import {
   Query,
   QueryResult,
@@ -82,11 +82,11 @@ export class AppComponent implements OnInit {
     //   .End();
 
     let result = query.Select(s => s.Select(
-      '*'
+      '*',
       // 'Name',
       // 'Age',
       // 'Price',
-      // new Avg('Age').Distinct().As('Avarage'),
+      //new Avg('Age').Distinct().As('Average'),
       // new Count('Age').Distinct().As('Count'),
       // new Sum('Age').Distinct().As('Sum'),
       // new Min('Age').Distinct().As('Min'),
