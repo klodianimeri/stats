@@ -139,8 +139,6 @@ export class GroupBy {
 
         });
 
-        console.log('groupbys: ', groupbys.AllTables());
-
         //TODO RETURN NORMALISED TABLE
         return groupbys.AllTables();
     }

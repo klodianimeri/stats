@@ -86,11 +86,11 @@ export class AppComponent implements OnInit {
       // 'Name',
       // 'Age',
       // 'Price',
-      //new Avg('Age').Distinct().As('Average'),
-      // new Count('Age').Distinct().As('Count'),
-      // new Sum('Age').Distinct().As('Sum'),
-      // new Min('Age').Distinct().As('Min'),
-      // new Max('Age').Distinct().As('Max')
+      new Avg('Age').Distinct().As('Average'),
+      new Count('Age').Distinct().As('Count'),
+      new Sum('Age').Distinct().As('Sum'),
+      new Min('Age').Distinct().As('Min'),
+      new Max('Age').Distinct().As('Max')
     )
       //.Limit(4)
       .From('person')

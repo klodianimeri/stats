@@ -185,15 +185,28 @@ export class Select implements IExecute {
       resultTable = this._where.ExecuteQuery(resultTable);
     }
 
+    // TODO Functions
+    let anyAgregateFunction: boolean = this._select.some((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
+
     let resultTables: Array<Table>;
-    if (this._groupby) {
-      resultTables = this._groupby.ExecuteQuery(resultTable);
-    }
+    // if (this._groupby) {
+
+    //   resultTables = this._groupby.ExecuteQuery(resultTable);
+
+    //   let resultAgregatedTables: Array<Table>;
+
+    //   if (anyAgregateFunction) {
+    //     resultTables.forEach((table, index, resultTables) => {
+    //       let tableAggregated = this.ExcecuteAgregateFunction(table);
+    //       resultAgregatedTables.push(tableAggregated);
+    //     });
+
+    //     // #TODO: Merge tables
+    //   }
+    // } else {
 
     // EXECUTE SELECT
     if (this._select) {
-      // TODO Functions
-      let anyAgregateFunction: boolean = this._select.some((value: TSelect) => { return (<QueryIAggregateFunction>value).State !== undefined; });
 
       if (anyAgregateFunction) {
         resultTable = this.ExcecuteAgregateFunction(resultTable)
@@ -201,6 +214,9 @@ export class Select implements IExecute {
         resultTable = this.ExecuteSelect(resultTable);
       }
     }
+
+    // }
+
 
     if (this._orderAscending) {
       resultTable = this._orderAscending.ExecuteQuery(resultTable);
